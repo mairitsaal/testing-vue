@@ -1,6 +1,6 @@
 import Vuex from 'vuex';
 import {createLocalVue} from '@vue/test-utils';
-import restaurants from 'src/store/restaurants';
+import restaurants from '@/store/restaurants';
 
 describe('restaurants', () => {
   const localVue = createLocalVue();
