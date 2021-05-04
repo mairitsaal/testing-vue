@@ -1,12 +1,11 @@
 <template>
   <div>
     <h1>RestaurantScreen</h1>
-  <RestaurantList/>
+    <RestaurantList />
   </div>
 </template>
 
 <script>
-
 import RestaurantList from '@/components/RestaurantList';
 
 export default {

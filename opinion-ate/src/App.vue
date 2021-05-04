@@ -1,7 +1,14 @@
 <template>
-  <div id="app">
+  <v-app>
+    <v-app-bar color="primary" fixed app>
+      <v-toolbar-title>Opinion Ate</v-toolbar-title>
+    </v-app-bar>
+    <v-content>
+      <v-container>
         <RestaurantScreen />
-  </div>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
