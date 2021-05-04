@@ -2,6 +2,7 @@ import Vuex from 'vuex';
 import {mount, createLocalVue} from '@vue/test-utils';
 import RestaurantList from '@/components/RestaurantList';
 
+
 describe('RestaurantList', () => {
     const records = [
         {id: 1, name: 'Sushi Place'},
@@ -36,12 +37,13 @@ describe('RestaurantList', () => {
         expect(restaurantsModule.actions.load).toHaveBeenCalled();
     });
 
+    const findByTestId = (wrapper, testId, index) =>
+        wrapper.findAll(`[data-testid="${testId}"]`).at(index);
+
     it('displays the restaurants', () => {
 
-        const secondRestaurantName = wrapper
-            .findAll('[data-testid="restaurant"]')
-            .at(1)
-            .text();
-        expect(secondRestaurantName).toBe('Pizza Place');
+        expect(findByTestId(wrapper, 'restaurant', 0).text()).toBe('Sushi Place');
+        expect(findByTestId(wrapper, 'restaurant', 1).text()).toBe('Pizza Place');
+
     });
 });
