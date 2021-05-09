@@ -10,13 +10,18 @@ const restaurants = (api, stateOverrides) => ({
     load({commit}) {
       commit('startLoading');
       api
-          .loadRestaurants()
-          .then(records => {
-        commit('storeRecords', records);
-      })
-          .catch(() => {
-            commit('recordLoadingError');
-          });
+        .loadRestaurants()
+        .then(records => {
+          commit('storeRecords', records);
+        })
+        .catch(() => {
+          commit('recordLoadingError');
+        });
+    },
+    create({commit}, newRestaurantName) {
+      return api.createRestaurant(newRestaurantName).then(record => {
+        commit('addRecord', record);
+      });
     },
   },
   mutations: {
@@ -31,6 +36,9 @@ const restaurants = (api, stateOverrides) => ({
     storeRecords(state, records) {
       state.records = records;
       state.loading = false;
+    },
+    addRecord(state, record) {
+      state.records.push(record);
     },
   },
 });
