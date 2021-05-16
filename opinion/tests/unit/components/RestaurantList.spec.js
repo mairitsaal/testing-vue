@@ -54,17 +54,18 @@ describe('RestaurantList', () => {
     beforeEach(() => {
           mountWithStore();
         });
+
     it('does not display the loading indicator while not loading', () => {
       expect(wrapper.find('[data-testid="loading-indicator"]').exists()).toBe(false);
-    });
-
-    it('does not display the error message', () => {
-      expect(wrapper.find('[data-testid="loading-error"]').exists()).toBe(false,);
     });
 
     it('displays the restaurants', () => {
       expect(findByTestId(wrapper, 'restaurant', 0).text()).toBe('Sushi Place');
       expect(findByTestId(wrapper, 'restaurant', 1).text()).toBe('Pizza Place');
+    });
+
+    it('does not display the error message', () => {
+      expect(wrapper.find('[data-testid="loading-error"]').exists()).toBe(false);
     });
   });
 
