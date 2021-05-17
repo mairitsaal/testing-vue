@@ -115,6 +115,7 @@ describe('restaurants', () => {
 
     let api;
     let store;
+    let promise;
 
     beforeEach(() => {
       api = {
@@ -129,22 +130,34 @@ describe('restaurants', () => {
 
     it('saves the restaurant to the server', () => {
       api.createRestaurant.mockResolvedValue(responseRestaurant);
-      store.dispatch('restaurants/create', newRestaurantName);
+      promise = store.dispatch('restaurants/create', newRestaurantName);
       expect(api.createRestaurant).toHaveBeenCalledWith(newRestaurantName);
     });
 
-  describe('when save succeeds', () => {
-    beforeEach(() => {
-      api.createRestaurant.mockResolvedValue(responseRestaurant);
-      store.dispatch('restaurants/create', newRestaurantName);
+    describe('when save succeeds', () => {
+      beforeEach(() => {
+        api.createRestaurant.mockResolvedValue(responseRestaurant);
+        promise = store.dispatch('restaurants/create', newRestaurantName);
+      });
+
+      it('stores the returned restaurant in the store', () => {
+        expect(store.state.restaurants.records).toEqual([
+          existingRestaurant,
+          responseRestaurant,
+        ]);
+      });
+
+      it('resolves', () => {
+        return expect(promise).resolves.toBeUndefined();
+      });
     });
 
-    it('stores the returned restaurant in the store', () => {
-      expect(store.state.restaurants.records).toEqual([
-        existingRestaurant,
-        responseRestaurant,
-      ]);
+    describe('when save fails', () => {
+      it('rejects', () => {
+        api.createRestaurant.mockRejectedValue();
+        promise = store.dispatch('restaurants/create', newRestaurantName);
+        return expect(promise).rejects.toBeUndefined();
+      });
     });
   });
-});
 });
